@@ -1,0 +1,32 @@
+apiVersion: security.istio.io/v1beta1
+kind: AuthorizationPolicy
+metadata:
+  name: "authorization-policy"
+  namespace: istio-system
+spec:
+    action: ALLOW
+    rules:
+    - from:
+      - source:
+          requestPrincipals: ["*"]
+      to:
+      - operation:
+          paths:
+          - /auth/v1/signout
+          - /auth/v1/forgot_password
+      when:
+      - key: request.auth.claims[roles]
+        values:
+          - customer
+    - to:
+      - operation:
+          paths: 
+          - "*/swagger/"
+          - /auth/v1/signup
+          - /auth/v1/signin
+          - /auth/v1/refresh_token
+          - /auth/v1/admin/*
+          - /auth/static/*
+    selector:
+      matchLabels:
+        istio: ingressgateway

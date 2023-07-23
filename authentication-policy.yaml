@@ -1,0 +1,13 @@
+apiVersion: security.istio.io/v1beta1
+kind: RequestAuthentication
+metadata:
+  name: "authentication-policy"
+  namespace: istio-system
+spec:
+  selector:
+    matchLabels:
+      istio: ingressgateway
+  jwtRules:
+  - forwardOriginalToken: true
+    issuer: "vellego.com"
+    jwks: '{"keys":[{"e":"AQAB","kty":"RSA","n":"95VccdRen5aqODvW4ItCaHpbWbZdtMZUcLpJB-rAgIjqbDc49FpE7Nt6FAuY8Lk-WUcq_CGfY5i6OUchoqCKnGY4bL-DI1fnAJdSBd72zGBSJewmuZT3_SvByN7gt2WHd8wuaiAdRuNhQog-r54MUOrSWdb8QoqrwVLvhn9-ZrQH91fZmwHp1BQQD5MNYaUsgdbnN8vUZgoDuqpYJwMmgXal8o0yUti450nwlQrCjPPYZ_xf0aXwF8QFpAWr1lzqy6jqcTUgnjO6zzje0Ps0eG7zsPlUmna0zredfLILtVkUCNX2Y096kgsXL5LgFFjb-QiOken2aR1TBqX0qEvHNw"}]}'
